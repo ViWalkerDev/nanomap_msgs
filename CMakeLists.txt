@@ -6,11 +6,20 @@ set(CMAKE_CUDA_STANDARD 11)
 set(CMAKE_CUDA_STANDARD_REQUIRED ON)
 project(nanomap_msgs)
 
-find_package(rosidl_default_generators REQUIRED)
-find_package(std_msgs REQUIRED)
-rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/OpenvdbGrid.msg"
-  DEPENDENCIES std_msgs
+find_package(catkin REQUIRED COMPONENTS
+   roscpp
+   rospy
+   std_msgs
+   message_generation
 )
 
-ament_package()
+add_message_files(
+  FILES
+  OpenvdbGrid.msg
+)
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+
+catkin_package(CATKIN_DEPENDS message_runtime)
